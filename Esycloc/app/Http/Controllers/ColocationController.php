@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use App\Models\Colocation;
 
+use App\Models\Colocation;
 
 class ColocationController extends Controller
 {
@@ -14,7 +15,8 @@ class ColocationController extends Controller
      */
     public function index()
     {
-        //
+        $colocations = Colocation::all();
+        return view('colocations.index', compact('colocations'));
     }
 
     /**
@@ -71,8 +73,9 @@ class ColocationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Colocation $colocation)
     {
-        //
+        $colocation->delete();
+        return redirect()->route('colocation.index');
     }
 }

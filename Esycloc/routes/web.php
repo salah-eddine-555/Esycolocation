@@ -22,9 +22,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    Route::get('/admin', function(){ return view('admin');});
+
     // routes pour colocations
-    Route::POST('/colocation', [ColocationController::class, 'store']);
-    Route::patch('/colocation', [ColocationController::class, 'update']);
+    Route::get('/colocation', [ColocationController::class, 'index']);
+    Route::post('/colocation', [ColocationController::class, 'store'])->name('colocation.store');
+    Route::get('/colocation/{colocation}/edit', [ColocationController::class, 'edit'])->name('colocation.edit');
+    Route::patch('/colocation/{colocation}', [ColocationController::class, 'update'])->name('colocation.update');
 });
 
 require __DIR__.'/auth.php';

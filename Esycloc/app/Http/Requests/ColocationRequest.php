@@ -11,6 +11,7 @@ class ColocationRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        //logique meiter pour la creation d'une colocation par une user
         return true;
     }
 

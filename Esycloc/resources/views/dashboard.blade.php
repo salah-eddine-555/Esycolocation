@@ -1,17 +1,144 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
+    <style>
+        body {
+            background-color: #f4f7f6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        #sidebar {
+            min-width: 250px;
+            max-width: 250px;
+            min-height: 100vh;
+            background: #2c3e50;
+            color: #fff;
+            position: fixed;
+        }
+
+        #sidebar .sidebar-header {
+            padding: 20px;
+            background: #1a252f;
+            text-align: center;
+        }
+
+        #sidebar ul li a {
+            padding: 15px 20px;
+            display: block;
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        #sidebar ul li a:hover {
+            color: #fff;
+            background: #34495e;
+            border-left: 4px solid #3498db;
+        }
+
+        #content {
+            margin-top: 20px;
+            width: calc(100% - 250px);
+            margin-left: 250px;
+        }
+
+        .stat-card {
+            border: none;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+
+<body>
+<div class="d-flex">
+
+    <!-- SIDEBAR -->
+    @include('sidebare')
+
+    <!-- CONTENT -->
+    <div id="content" class="container-fluid">
+
+        <h3 class="fw-bold mb-4">Mon Dashboard</h3>
+
+        <!-- CARDS STATISTIQUES EN HAUT -->
+        <div class="row g-4 mb-5">
+
+            <div class="col-md-6">
+                <div class="card stat-card bg-white shadow-sm p-3">
+                    <div class="d-flex align-items-center">
+                        <div class="p-3 bg-danger bg-opacity-10 rounded-circle me-3">
+                            <i class="bi bi-wallet2 text-danger fs-3"></i>
+                        </div>
+                        <div>
+                            <p class="text-muted mb-0">Total Dépenses</p>
+                            <h4 class="fw-bold mb-0">630 €</h4>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <div class="col-md-6">
+                <div class="card stat-card bg-white shadow-sm p-3">
+                    <div class="d-flex align-items-center">
+                        <div class="p-3 bg-warning bg-opacity-10 rounded-circle me-3">
+                            <i class="bi bi-star-fill text-warning fs-3"></i>
+                        </div>
+                        <div>
+                            <p class="text-muted mb-0">Score Réputation</p>
+                            <h4 class="fw-bold mb-0">4.8 / 5</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
+
+        <!-- TABLEAU DEPENSES EN DESSOUS -->
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h5 class="fw-bold mb-3">Mes Dépenses</h5>
+
+                <table class="table table-striped">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Titre</th>
+                            <th>Montant</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Loyer Janvier</td>
+                            <td>450 €</td>
+                            <td>01/01/2026</td>
+                        </tr>
+                        <tr>
+                            <td>Électricité</td>
+                            <td>120 €</td>
+                            <td>10/01/2026</td>
+                        </tr>
+                        <tr>
+                            <td>Internet</td>
+                            <td>60 €</td>
+                            <td>15/01/2026</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
-</x-app-layout>
+</div>
+
+</body>
+</html>
