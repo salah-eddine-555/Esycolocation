@@ -2,6 +2,7 @@
 
 namespace App\Models;
 use App\Models\Role;
+use App\Models\Colocation;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -52,5 +53,13 @@ class User extends Authenticatable
 
     public function role(){
         return $this->belongsTo(Role::class);
+    }
+
+    public function colocations() 
+    {
+        return $this->belongsToMany(Colocation::class, 'user_colocation')
+                    ->using(UserColocation::class)
+                    ->withPivot('role_colocation', 'jointed_at', 'left_at')
+                    ->withTimestamps();
     }
 }
