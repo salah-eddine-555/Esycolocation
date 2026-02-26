@@ -56,11 +56,7 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
-         if($user->role_id == 1){
-             return redirect(route('dashboard', absolute: false));
-        }else {
-            return redirect()->route('home');
-        }
        
+        return redirect(route('dashboard', absolute: false));
     }
 }

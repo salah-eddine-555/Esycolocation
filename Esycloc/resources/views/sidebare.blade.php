@@ -29,9 +29,12 @@
         @endif
 
         <li class="mt-5">
-            <a href="#" class="text-danger">
-                <i class="bi bi-box-arrow-right me-2"></i>Déconnexion
-            </a>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="text-danger border-0 bg-transparent">
+                    <i class="bi bi-box-arrow-right me-2"></i> Déconnexion
+                </button>
+            </form>
         </li>
 
     </ul>

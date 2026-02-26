@@ -6,7 +6,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 
+use App\Http\Requests\ColocationRequest;
+
 use App\Models\Colocation;
+use Illuminate\Support\Facades\Auth;
+
 
 class ColocationController extends Controller
 {
@@ -15,8 +19,9 @@ class ColocationController extends Controller
      */
     public function index()
     {
-        $colocations = Colocation::all();
-        return view('colocations.index', compact('colocations'));
+        $colocations = Auth::user()->colocations;
+        $depenses = Auth::user()->depenses;
+        return view('colocations.index', compact('colocations','depenses'));
     }
 
     /**
@@ -32,15 +37,24 @@ class ColocationController extends Controller
      */
     public function store(ColocationRequest $request): RedirectResponse
     {
+        $user = auth()->user();
+
+        if($user->role->name !== 'admin'){
+            $existColocation = $user->colocations()->wherePivot('left_at', null)->first();
+             
+            if($existColocation){
+                return redirect()->back()->with('error', 'vous avex deja  une colocation active .');
+            }
+        }
         $validated = $request->validated();
         $colocation = Colocation::create($validated);
 
         $colocation->users()->attach(auth()->id(), [
-            'role_colocation'=> 'gerant',
+            'role_colocation'=> 'owner',
             'jointed_at'=> now(),
         ]);
 
-        return redirect()->route('colocation.index');
+        return redirect()->back();
     }
 
     /**
