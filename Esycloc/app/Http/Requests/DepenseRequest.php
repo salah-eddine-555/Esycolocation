@@ -24,8 +24,7 @@ class DepenseRequest extends FormRequest
         return [
             'titre'=> 'required|string|max:255',
             'montant'=> 'required|numeric',
-            'date' => 'nullable|date',
-            'categorie_id' => 'required|interger|exists:categories,id'
+            'categorie_id' => 'required|integer|exists:categories,id'
         ];
     }
 }

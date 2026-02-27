@@ -35,7 +35,7 @@ class CategorieController extends Controller
         $user = auth()->user();
         $UserColocation = $colocation->users()->where('user_id', $user->id)->first();
 
-
+        
         if($UserColocation->pivot->role_colocation !== 'owner'){
             return redirect()->back()->with('error', 'n est pas le droit pour crre categorie');
         }
@@ -87,7 +87,7 @@ class CategorieController extends Controller
     {
         $user = auth()->user();
         $colocation = $categorie->colocation;
-        
+
         $UserColocation = $colocation->users()->where('user_id', $user->id)->first();
 
 

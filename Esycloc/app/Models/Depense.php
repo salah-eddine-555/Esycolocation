@@ -3,13 +3,14 @@
 namespace App\Models;
 use App\Models\User;
 use App\Models\Categorie;
+use App\Models\Apayer;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Depense extends Model
 {
     //
-    protected $fillable = ['titre', 'montant', 'date','categorie_id'];
+    protected $fillable = ['titre', 'montant', 'date','categorie_id','user_id','colocation_id'];
 
 
     public function user(){
@@ -22,5 +23,9 @@ class Depense extends Model
 
     public function colocation(){
         return $this->belongsTo(Colocation::class);
+    }
+
+    public function apayees(){
+        return $this->hasMany(Apayer::class, 'depense_id');
     }
 }

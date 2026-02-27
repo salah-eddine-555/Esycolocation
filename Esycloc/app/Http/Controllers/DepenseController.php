@@ -3,15 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Colocation;
+use App\Models\Depense;
+use App\Http\Requests\DepenseRequest;
+
 
 class DepenseController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Colocation $colocation)
     {
-      
+            // $depenses = $colocation->depenses();
+            // return view('colocations.details', compact('depenses'));
     }
 
     /**
@@ -25,18 +30,22 @@ class DepenseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(DepenseRequest $request)
+    public function store(DepenseRequest $request,Colocation $colocation,ApayerController $apaye)
     {
         $user = auth()->user();
         
         $validated = $request->validated();
 
-        $validated['user_id'] = auth()->id;
+        $validated['user_id'] = $user->id;
+        
+        $validated['colocation_id'] = $colocation->id;
        
 
         Depense::create($validated);
 
-        return redirect()->back()->with('error', 'depense est cree avec succes');
+        $apaye->calculer();
+
+        return redirect()->back()->with('success', 'depense est cree avec succes');
     }
 
     /**

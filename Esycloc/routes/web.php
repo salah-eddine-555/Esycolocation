@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ColocationController;
 use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\DepenseController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -38,6 +39,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/categorie/{categorie}', [CategorieController::class, 'edit'])->name('categorie.edit');
     Route::patch('/categorie/{categorie}', [CategorieController::class, 'update'])->name('categorie.update');
     Route::delete('/categorie/{categorie}', [CategorieController::class, 'destroy'])->name('categorie.destroy');
+
+    //routes pour depenses
+    Route::post('/depense/{colocation}', [DepenseController::class, 'store'])->name('depense.store');
   
 });
 

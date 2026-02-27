@@ -16,6 +16,16 @@
     
     
         <div class="container mt-5 col-6">
+            <div class="col-6">
+                     @if(session('success'))
+                        <div class="alert alert-success">
+                            {{session('success')}}
+                        </div>
+                    @endif
+                    @if(session('error'))
+                        <div class="alert alert-danger">{{session('error')}}</div>
+                    @endif
+            </div>
             <div class="card shadow rounded-4">
                 <div class="card-body">
 
@@ -57,6 +67,7 @@
                             <div class="card-body p-0">
 
                                 <div class="table-responsive">
+                                  
                                     <table class="table align-middle mb-0">
 
                                         <thead class="bg-light">
@@ -70,22 +81,28 @@
                                         </thead>
 
                                         <tbody>
-                                            <tr>
-                                                <td class="ps-4 fw-medium">Loyer Janvier</td>
-                                                <td>
+                                            @forelse($depenses as $depense)
+                                                <tr>
+                                                     <td class="ps-4 fw-medium">{{$depense->titre}}</td>
+                                                     <td>
                                                     <span class="badge bg-secondary-subtle text-dark">
-                                                        Logement
+                                                        {{$depense->categorie->name}}
                                                     </span>
-                                                </td>
-                                                <td class="fw-semibold text-success">
-                                                    2500 MAD
-                                                </td>
-                                                <td>Ahmed</td>
-                                                <td class="text-end pe-4">
-                                                    <button class="btn btn-sm btn-outline-danger">
-                                                        Supprimer
-                                                    </button>
-                                                </td>
+                                                    </td>
+                                                     <td class="fw-semibold text-success">{{$depense->montant}} DH</td>
+                                                     <td>{{$depense->user->firstname}}</td>
+                                                     
+                                                     <td>
+                                                        <form action="">
+                                                            <button class="btn btn-sm btn-outline-danger">supprimer</button>
+                                                        </form>
+                                                     </td>
+                                                    
+                
+                                                
+                                            @empty
+                                                <td colspan='4'>acune depense</td>
+                                            @endforelse
                                             </tr>
                                         </tbody>
 
@@ -101,14 +118,7 @@
              <div class="card shadow rounded-4 border-0">
 
         <!-- Header -->
-                    @if(session('success'))
-                        <div class="alert alert-success">
-                            {{session('success')}}
-                        </div>
-                    @endif
-                    @if(session('error'))
-                        <div class="alert alert-danger">{{session('error')}}</div>
-                    @endif
+               
                         
                     <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center rounded-top-4">
                         <h5 class="mb-0">Catégories</h5>
@@ -121,7 +131,6 @@
 
                     <!-- Body -->
                     <div class="card-body">
-
                         <!-- Catégorie 1 -->
                         @forelse($colocation->categories as $categorie)
                             <div class="d-flex justify-content-between align-items-center mb-3 p-2 border rounded">
@@ -190,7 +199,7 @@
 
             <!-- Body -->
             <div class="modal-body">
-                <form  method="POST">
+                <form  action="{{ route('depense.store', $colocation)}}" method="POST">
                     @csrf
                     <div class="mb-3">
                         <label class="form-label">Titre</label>
