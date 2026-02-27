@@ -27,6 +27,8 @@ class DepenseController extends Controller
      */
     public function store(DepenseRequest $request)
     {
+        $user = auth()->user();
+        
         $validated = $request->validated();
 
         $validated['user_id'] = auth()->id;

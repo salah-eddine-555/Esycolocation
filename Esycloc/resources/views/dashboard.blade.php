@@ -12,34 +12,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        #sidebar {
-            min-width: 250px;
-            max-width: 250px;
-            min-height: 100vh;
-            background: #2c3e50;
-            color: #fff;
-            position: fixed;
-        }
-
-        #sidebar .sidebar-header {
-            padding: 20px;
-            background: #1a252f;
-            text-align: center;
-        }
-
-        #sidebar ul li a {
-            padding: 15px 20px;
-            display: block;
-            color: #bdc3c7;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-
-        #sidebar ul li a:hover {
-            color: #fff;
-            background: #34495e;
-            border-left: 4px solid #3498db;
-        }
+      
 
         #content {
             margin-top: 20px;

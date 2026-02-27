@@ -21,6 +21,7 @@ class ColocationController extends Controller
     {
         $colocations = Auth::user()->colocations;
         $depenses = Auth::user()->depenses;
+        
         return view('colocations.index', compact('colocations','depenses'));
     }
 
@@ -60,9 +61,10 @@ class ColocationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Colocation $colocation)
     {
-        //
+        $colocation->load('categories');
+        return view('colocations.details', compact('colocation'));
     }
 
     /**

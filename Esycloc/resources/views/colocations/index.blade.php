@@ -7,34 +7,6 @@
 
     <title>colocations</title>
     <style>
-                #sidebar {
-            min-width: 250px;
-            max-width: 250px;
-            min-height: 100vh;
-            background: #2c3e50;
-            color: #fff;
-            position: fixed;
-        }
-
-        #sidebar .sidebar-header {
-            padding: 20px;
-            background: #1a252f;
-            text-align: center;
-        }
-
-        #sidebar ul li a {
-            padding: 15px 20px;
-            display: block;
-            color: #bdc3c7;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-
-        #sidebar ul li a:hover {
-            color: #fff;
-            background: #34495e;
-            border-left: 4px solid #3498db;
-        }
         #content {
             margin-top: 20px;
             width: calc(100% - 250px);
@@ -60,26 +32,29 @@
             @endif
             <div class="d-flex justify-content-center mt-5">
 
-                <div class="col-7">
-                    <table class="table w-75">
-                        <tr>
-                            <th>name</th>
-                            <th>description</th>
-                        </tr>
-                        @forelse($colocations as $colocation)
-                        <tr>
-                            <td>{{ $colocation->name }}</td>
-                            <td>{{ $colocation->description }}</td>
-                        </tr>
-                        @empty
-                        <tr>
-                            <td colspan="2" class="text-center">Aucune colocation pour le moment</td>
-                        </tr>
-                        @endforelse
-                </table>
+                <div class="col-7 mt-5">
+                     @forelse($colocations as $colocation)
+                    <div class="col-md-4 mb-3 d-flex">
+                        <div class="card h-100 shadow-sm w-100">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">{{ $colocation->name }}</h5>
+                                <p class="card-text">{{ $colocation->description }}</p>
+                                <a href="{{ route('colocation.show', $colocation)}}" class="btn btn-primary btn-sm mt-auto">
+                                    Détails
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                @empty
+                    <div class="col-12">
+                        <div class="alert alert-info text-center">
+                            Aucune colocation pour le moment
+                        </div>
+                    </div>
+                @endforelse
                 </div>
                 <div class="col-4">
-
+                    
                     <div class="card bg-dark text-white">
                         <div class="card-header">
                             <h5>Membre de colocation</h5>

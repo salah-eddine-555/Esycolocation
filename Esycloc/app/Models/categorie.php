@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class categorie extends Model
 {
-    protected $fillable = ['name'];
+    protected $fillable = ['name','colocation_id'];
 
 
     public function depenses(){
-        return this->hasMany(Depense::class);
+        return $this->hasMany(Depense::class);
     }
 
 

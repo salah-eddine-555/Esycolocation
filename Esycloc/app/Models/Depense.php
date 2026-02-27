@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Depense extends Model
 {
     //
-    protected $fillable = ['titre', 'montant', 'date'];
+    protected $fillable = ['titre', 'montant', 'date','categorie_id'];
 
 
     public function user(){
@@ -18,5 +18,9 @@ class Depense extends Model
 
     public function categorie(){
         return $this->belongsTo(Categorie::class);
+    }
+
+    public function colocation(){
+        return $this->belongsTo(Colocation::class);
     }
 }
