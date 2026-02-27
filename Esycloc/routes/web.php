@@ -37,6 +37,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/categorie/{colocation}', [CategorieController::class, 'store'])->name('categorie.store');
     Route::get('/categorie/{categorie}', [CategorieController::class, 'edit'])->name('categorie.edit');
     Route::patch('/categorie/{categorie}', [CategorieController::class, 'update'])->name('categorie.update');
+    Route::delete('/categorie/{categorie}', [CategorieController::class, 'destroy'])->name('categorie.destroy');
+  
 });
 
 require __DIR__.'/auth.php';

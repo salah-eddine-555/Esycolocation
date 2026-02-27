@@ -15,7 +15,17 @@
         
         
         <div class="col-8 mt-5">
-            
+                @if(session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
+                @if(session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
             <form action="{{ route('categorie.update', $categorie)}}" method="POST">
                       @csrf
                       @method('PATCH')
@@ -27,7 +37,8 @@
                           <button type="submit" class="btn btn-success w-25">
                               modifier
                           </button>
-                          <button class="btn btn-info w-25">retour</button>
+                          <button class="btn btn-info w-25">
+                            <a href="/colocation">retour</a></button>
                       </div>
 
             </form>

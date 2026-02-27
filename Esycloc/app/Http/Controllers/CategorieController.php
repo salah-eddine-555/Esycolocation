@@ -68,7 +68,7 @@ class CategorieController extends Controller
         $categorie = Categorie::findOrFail($id);
         $colocation = $categorie->colocation;
       
-        dd($colocation);
+       
         $user = auth()->user();
         $UserColocation = $colocation->users()->where('user_id', $user->id)->first();
 
@@ -77,14 +77,25 @@ class CategorieController extends Controller
         }
         $validated = $request->validated();
         $categorie->update($validated);
-        return redirect()->route('colocation.show')->with('success', 'le categorie est modifier avec succes !');
+        return redirect()->back()->with('success', 'le categorie est modifier avec succes !');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Categorie $categorie)
     {
-        //
+        $user = auth()->user();
+        $colocation = $categorie->colocation;
+        
+        $UserColocation = $colocation->users()->where('user_id', $user->id)->first();
+
+
+        if($UserColocation->pivot->role_colocation !== 'owner'){
+            return redirect()->back()->with('error', 'n est pas le droit de supprimer cette categorie');
+        }
+        $categorie->delete();
+
+        return redirect()->back()->with('success', 'categorie supprimer avec success');
     }
 }

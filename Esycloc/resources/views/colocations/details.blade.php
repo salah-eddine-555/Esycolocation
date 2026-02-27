@@ -38,11 +38,78 @@
 
                 </div>
             </div>
+            {{-- Tableau des dépenses --}}
+                    <div class="mt-5">
+
+                        <div class="card border-0 shadow-sm">
+
+                            {{-- Header propre avec bouton --}}
+                            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0 fw-semibold text-dark">
+                                    Liste des Dépenses
+                                </h5>
+
+                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addDepenseModal">
+                                    + Nouvelle dépense
+                                </button>
+                            </div>
+
+                            <div class="card-body p-0">
+
+                                <div class="table-responsive">
+                                    <table class="table align-middle mb-0">
+
+                                        <thead class="bg-light">
+                                            <tr class="text-muted small">
+                                                <th class="ps-4">Titre</th>
+                                                <th>Catégorie</th>
+                                                <th>Montant</th>
+                                                <th>Payeur</th>
+                                                <th class="text-end pe-4">Action</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr>
+                                                <td class="ps-4 fw-medium">Loyer Janvier</td>
+                                                <td>
+                                                    <span class="badge bg-secondary-subtle text-dark">
+                                                        Logement
+                                                    </span>
+                                                </td>
+                                                <td class="fw-semibold text-success">
+                                                    2500 MAD
+                                                </td>
+                                                <td>Ahmed</td>
+                                                <td class="text-end pe-4">
+                                                    <button class="btn btn-sm btn-outline-danger">
+                                                        Supprimer
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
         </div>
         <div class="col-3 mt-5">
              <div class="card shadow rounded-4 border-0">
 
         <!-- Header -->
+                    @if(session('success'))
+                        <div class="alert alert-success">
+                            {{session('success')}}
+                        </div>
+                    @endif
+                    @if(session('error'))
+                        <div class="alert alert-danger">{{session('error')}}</div>
+                    @endif
+                        
                     <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center rounded-top-4">
                         <h5 class="mb-0">Catégories</h5>
 
@@ -61,15 +128,22 @@
                                 <span>{{$categorie->name}}</span>
 
                                 <div class="btn-group btn-group-sm">
-                                    <button class="btn btn-outline-warning">
-                                       <a href="{{route ('categorie.edit', $categorie)}}">Modifier</a> 
-                                    </button>
-                                    <button class="btn btn-outline-danger">Supprimer</button>
+                                    
+                                       <a class="btn btn-outline-warning" href="{{route ('categorie.edit', $categorie)}}">Modifier</a> 
+                                   
+                                        <form action="{{ route('categorie.destroy', $categorie) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-outline-danger">
+                                                Supprimer
+                                            </button>
+                                        </form>
                                 </div>
                             </div>
                             @empty
                             <div><p>Acune categories crree pour le moment</p></div>
                          @endforelse
+                         
                         
                     </div>
         </div> 
@@ -102,7 +176,58 @@
               </div>
             </div>
     </div>
+
+    {{-- Modal statique pour ajouter une dépense --}}
+<div class="modal fade" id="addDepenseModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Header -->
+            <div class="modal-header">
+                <h5 class="modal-title w-100 text-center">Ajouter une Dépense</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body">
+                <form  method="POST">
+                    @csrf
+                    <div class="mb-3">
+                        <label class="form-label">Titre</label>
+                        <input type="text" name="titre"  class="form-control" placeholder="Ex: Loyer Janvier" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Catégorie</label>
+                        <select name="categorie_id" class="form-select" required>
+                            <option value="" disabled selected>Choisir une catégorie</option>
+                            @forelse($colocation->categories as $categorie)
+                                <option value="{{ $categorie->id }}">{{ $categorie->name }}</option>
+                            @empty
+                                <option value="" disabled>Aucune catégorie disponible</option>
+                            @endforelse
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Montant</label>
+                        <input type="number" name="montant" class="form-control" placeholder="Ex: 2500" required>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success w-50">Ajouter</button>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
 </div>
+</div>
+
+
+
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

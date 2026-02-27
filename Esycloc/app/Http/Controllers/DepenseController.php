@@ -32,6 +32,7 @@ class DepenseController extends Controller
         $validated = $request->validated();
 
         $validated['user_id'] = auth()->id;
+       
 
         Depense::create($validated);
 
