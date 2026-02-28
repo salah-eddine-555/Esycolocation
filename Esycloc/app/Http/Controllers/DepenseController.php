@@ -41,9 +41,9 @@ class DepenseController extends Controller
         $validated['colocation_id'] = $colocation->id;
        
 
-        Depense::create($validated);
+        $depense = Depense::create($validated);
 
-        $apaye->calculer();
+        $apaye->calculer($depense);
 
         return redirect()->back()->with('success', 'depense est cree avec succes');
     }
@@ -75,8 +75,11 @@ class DepenseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Depense $depense)
     {
-        //
+        $depense->delete();
+
+        return redirect()->back();
+
     }
 }

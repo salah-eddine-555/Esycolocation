@@ -56,15 +56,62 @@
                     
                 </div>
                 <div class="col-4">
+                    <div class="card shadow-sm mb-4">
+    <div class="card-header bg-danger text-white">
+        <h5 class="mb-0">💸 Dépenses à payer</h5>
+    </div>
+    <div class="card-body">
+        @forelse($mesDettes as $dette)
+            <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+                <div>
+                    <strong>
+                        {{ $dette->depense->user->firstname }}
+                    </strong>
+                    <br>
+                    <small class="text-muted">
+                        Dépense : {{ $dette->depense->titre ?? 'Sans titre' }}
+                    </small>
+                </div>
+                <span class="badge bg-danger">
+                    {{ number_format($dette->montant, 2) }} DH
+                </span>
+            </div>
+        @empty
+            <p class="text-muted text-center">
+                🎉 Vous n'avez aucune dette
+            </p>
+        @endforelse
+    </div>
+</div>
                     
-                    <div class="card bg-dark text-white">
-                        <div class="card-header">
-                            <h5>Membre de colocation</h5>
-                        </div>
-                      <div class="card-body">
-                        This is some text within a card body.
-                      </div>
+                   <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Membres de la colocation</h5>
                     </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            @foreach($membres as $membre)
+                                <div class="col-12 col-md-6">
+                                    <div class="card h-100 border-light shadow-sm">
+                                        <div class="card-body d-flex align-items-center justify-content-between">
+                                            <div>
+                                                <h6 class="card-title mb-1">{{ $membre->firstname }}</h6>
+                                                <small class="text-muted">{{ $membre->pivot->role_colocation }}</small>
+                                            </div>
+                                            @if($membre->pivot->role_colocation === 'owner')
+                                                <!-- Icone pour owner -->
+                                                <span class="badge bg-warning text-dark">
+                                                    <i class="bi bi-star-fill"></i> Owner
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+</div>
+
 
                 </div>
                 

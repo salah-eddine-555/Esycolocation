@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\ColocationRequest;
 
 use App\Models\Colocation;
+use App\Models\Apayer;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -19,8 +20,17 @@ class ColocationController extends Controller
      */
     public function index()
     {
-        $colocations = Auth::user()->colocations; 
-        return view('colocations.index', compact('colocations','depenses'));
+        $user = auth()->user();
+        $colocations = $user->colocations; 
+        $mesDettes = Apayer::where('user_id', $user->id)->where('statut', false)->with('depense.user')->get();
+
+        $colocationActive = $user->colocations()->wherePivot('left_at', null)->first();
+       if($colocationActive){
+            $membres = $colocationActive->users()->withPivot('role_colocation')->get();
+ 
+       }
+
+        return view('colocations.index', compact('colocations', 'membres', 'mesDettes'));
     }
 
     /**

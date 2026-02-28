@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Colocation;
+use App\Models\Apayer;
+
 
 use Illuminate\Http\Request;
 
@@ -8,10 +11,10 @@ use Illuminate\Http\Request;
 class ApayerController extends Controller
 {
     
-    public function calculer(Depense $depense){
+    public function calculer($depense){
 
         $colocation = Colocation::findOrFail($depense->colocation_id);
-        $montantpayee = $depense->montant / count($colocation->user);
+        $montantpayee = $depense->montant / count($colocation->users);
 
         foreach($colocation->users as $user){
             $apyer = new Apayer();
@@ -22,7 +25,7 @@ class ApayerController extends Controller
             $apyer->save();
         }
         $user = auth()->user();
-        $apayes = $depense->apayees();
+        $apayes = $depense->apayees;
         foreach($apayes as $apaye){
             if($apaye->user_id == $user->id){
                 $apaye->statut = true;

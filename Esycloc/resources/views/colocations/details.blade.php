@@ -93,13 +93,12 @@
                                                      <td>{{$depense->user->firstname}}</td>
                                                      
                                                      <td>
-                                                        <form action="">
-                                                            <button class="btn btn-sm btn-outline-danger">supprimer</button>
+                                                        <form action="{{route ('depense.destroy', $depense)}}" method="POST">
+                                                            @csrf
+                                                             @method('DELETE')
+                                                            <button type="submit" class="btn btn-sm btn-outline-danger">supprimer</button>
                                                         </form>
-                                                     </td>
-                                                    
-                
-                                                
+                                                     </td>  
                                             @empty
                                                 <td colspan='4'>acune depense</td>
                                             @endforelse

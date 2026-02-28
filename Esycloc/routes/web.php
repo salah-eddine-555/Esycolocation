@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function () {
 
     //routes pour depenses
     Route::post('/depense/{colocation}', [DepenseController::class, 'store'])->name('depense.store');
+    Route::delete('/depense/{depense}', [DepenseController::class, 'destroy'])->name('depense.destroy');
   
 });
 
