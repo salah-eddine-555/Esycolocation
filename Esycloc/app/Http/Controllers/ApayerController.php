@@ -32,7 +32,7 @@ class ApayerController extends Controller
                 $apaye->save();
             }
         }
-
+        
 
     }
 }

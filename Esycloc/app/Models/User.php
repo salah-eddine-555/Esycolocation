@@ -3,6 +3,7 @@
 namespace App\Models;
 use App\Models\Role;
 use App\Models\Colocation;
+use App\Models\Invitation;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -65,5 +66,9 @@ class User extends Authenticatable
 
     public function depenses(){
         return $this->hasMany(Depense::class);
+    }
+
+    public function invitations(){
+        return $this->hasMany(Invitation::class);
     }
 }
