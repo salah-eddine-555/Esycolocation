@@ -23,11 +23,12 @@ class ColocationController extends Controller
         $user = auth()->user();
         $colocations = $user->colocations; 
         $mesDettes = Apayer::where('user_id', $user->id)->where('statut', false)->with('depense.user')->get();
-
-        $colocationActive = $user->colocations()->wherePivot('left_at', null)->first();
+        $membres = collect();
+   
+        $colocationActive = $user->colocations()->wherePivot('left_at', false)->first();
+       dd($colocationActive);
        if($colocationActive){
             $membres = $colocationActive->users()->withPivot('role_colocation')->get();
- 
        }
 
         return view('colocations.index', compact('colocations', 'membres', 'mesDettes'));
@@ -71,6 +72,11 @@ class ColocationController extends Controller
      */
     public function show(Colocation $colocation)
     {
+
+        if (!$colocation->users()->where('user_id', auth()->id())->exists()) {
+            abort(403);
+        }
+
         $colocation->load('categories', 'depenses');
         $depenses = $colocation->depenses;
   

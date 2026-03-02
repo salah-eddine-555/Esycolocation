@@ -54,12 +54,11 @@
                         </div>
                         <div>
                             <p class="text-muted mb-0">Total Dépenses</p>
-                            <h4 class="fw-bold mb-0">630 €</h4>
+                            <h4 class="fw-bold mb-0">{{$totalDepenses}} DH</h4>
                         </div>
                     </div>
                 </div>
             </div>
-
             <div class="col-md-6">
                 <div class="card stat-card bg-white shadow-sm p-3">
                     <div class="d-flex align-items-center">
@@ -68,7 +67,7 @@
                         </div>
                         <div>
                             <p class="text-muted mb-0">Score Réputation</p>
-                            <h4 class="fw-bold mb-0">4.8 / 5</h4>
+                            <h4 class="fw-bold mb-0">{{$scoreReputation}}</h4>
                         </div>
                     </div>
                 </div>
@@ -86,25 +85,21 @@
                         <tr>
                             <th>Titre</th>
                             <th>Montant</th>
+                            <th>categorie</th>
                             <th>Date</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Loyer Janvier</td>
-                            <td>450 €</td>
-                            <td>01/01/2026</td>
-                        </tr>
-                        <tr>
-                            <td>Électricité</td>
-                            <td>120 €</td>
-                            <td>10/01/2026</td>
-                        </tr>
-                        <tr>
-                            <td>Internet</td>
-                            <td>60 €</td>
-                            <td>15/01/2026</td>
-                        </tr>
+                        @forelse($depenses as $depense)
+                            <tr>
+                                <td>{{$depense->titre}}</td>
+                                <td>{{$depense->montant}}</td>
+                                <td>{{$depense->categorie->name}}</td>
+                                <td>{{$depense->created_at}}</td>
+                            </tr>
+                        @empty
+                            <td colspan=3>acune depenses</td>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

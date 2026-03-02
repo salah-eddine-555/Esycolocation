@@ -32,7 +32,21 @@ class ApayerController extends Controller
                 $apaye->save();
             }
         }
-        
-
     }
+
+    public function payer(Apayer $dette){
+        
+        $dette->statut = true;
+        $dette->save();
+
+        $user = $dette->user;
+        $user->reputation += 1;
+        $user->save();
+
+    
+
+        return redirect()->back()->with('success', 'facture est payee');
+    }
+
+
 }

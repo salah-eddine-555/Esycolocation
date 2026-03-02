@@ -4,6 +4,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ColocationController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\DepenseController;
+use App\Http\Controllers\InvitationController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ApayerController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -43,7 +46,17 @@ Route::middleware('auth')->group(function () {
     //routes pour depenses
     Route::post('/depense/{colocation}', [DepenseController::class, 'store'])->name('depense.store');
     Route::delete('/depense/{depense}', [DepenseController::class, 'destroy'])->name('depense.destroy');
+
+    // route pour l'invitation
+    Route::post('/invitation/{colocation}', [InvitationController::class, 'store'])->name('inviter.store');
+
+    Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
+
+    //paiement
+    Route::post('/payer/{dette}', [ApayerController::class, 'payer'])->name('payer');
+   
   
 });
+ route::get('/invitation/accept/{token}',[InvitationController::class, 'accept']);
 
 require __DIR__.'/auth.php';

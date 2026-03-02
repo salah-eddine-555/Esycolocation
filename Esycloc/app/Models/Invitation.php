@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Models\Colocation;
 class Invitation extends Model
 {
-    protected $fillable = ['email', 'token'];
+    protected $fillable = ['email', 'token','id_user', 'id_colocation'];
 
 
     public function user(){
@@ -15,6 +15,6 @@ class Invitation extends Model
     }
 
     public function colocation(){
-        return $this->belongsTo(Colocation::class);
+        return $this->belongsTo(Colocation::class, 'id_colocation');
     }
 }

@@ -75,8 +75,14 @@
                 <span class="badge bg-danger">
                     {{ number_format($dette->montant, 2) }} DH
                 </span>
+                  <div>
+                        <form action="{{route('payer', $dette)}}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-success btn-sm">Payer</button>
+                        </form>
+                    </div>
             </div>
-        @empty
+         @empty
             <p class="text-muted text-center">
                 🎉 Vous n'avez aucune dette
             </p>

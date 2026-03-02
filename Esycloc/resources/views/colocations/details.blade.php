@@ -76,7 +76,6 @@
                                                 <th>Catégorie</th>
                                                 <th>Montant</th>
                                                 <th>Payeur</th>
-                                                <th class="text-end pe-4">Action</th>
                                             </tr>
                                         </thead>
 
@@ -90,15 +89,7 @@
                                                     </span>
                                                     </td>
                                                      <td class="fw-semibold text-success">{{$depense->montant}} DH</td>
-                                                     <td>{{$depense->user->firstname}}</td>
-                                                     
-                                                     <td>
-                                                        <form action="{{route ('depense.destroy', $depense)}}" method="POST">
-                                                            @csrf
-                                                             @method('DELETE')
-                                                            <button type="submit" class="btn btn-sm btn-outline-danger">supprimer</button>
-                                                        </form>
-                                                     </td>  
+                                                     <td>{{$depense->user->firstname}}</td> 
                                             @empty
                                                 <td colspan='4'>acune depense</td>
                                             @endforelse
@@ -127,10 +118,7 @@
                             + Ajouter
                         </button>
                     </div>
-
-                    <!-- Body -->
                     <div class="card-body">
-                        <!-- Catégorie 1 -->
                         @forelse($colocation->categories as $categorie)
                             <div class="d-flex justify-content-between align-items-center mb-3 p-2 border rounded">
                                 <span>{{$categorie->name}}</span>
@@ -151,10 +139,28 @@
                             @empty
                             <div><p>Acune categories crree pour le moment</p></div>
                          @endforelse
-                         
-                        
                     </div>
         </div> 
+         <div class="card shadow-sm w-100 mx-auto mt-5">
+    <div class="card-header bg-primary text-white text-center">
+        <h5 class="mb-0">Inviter un nouveau membre</h5>
+    </div>
+    <div class="card-body">
+        <form action="{{route('inviter.store', $colocation)}}" method="POST">
+            @csrf
+            <div class="mb-3">
+                <label for="email" class="form-label">Email du membre</label>
+                <input type="email" name="email" id="email" class="form-control" placeholder="ex: exemple@mail.com" required>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-success w-50">
+                    Inviter
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
         
             <div class="modal fade" id="addCategorieModal" tabindex="-1">
             <div class="modal-dialog">
