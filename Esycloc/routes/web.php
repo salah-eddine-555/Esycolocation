@@ -7,6 +7,7 @@ use App\Http\Controllers\DepenseController;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ApayerController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -27,7 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/admin', function(){ return view('admin');});
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin');
 
     // routes pour colocations
     Route::get('/colocation', [ColocationController::class, 'index']);
