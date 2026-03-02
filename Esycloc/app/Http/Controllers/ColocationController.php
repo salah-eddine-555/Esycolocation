@@ -22,14 +22,14 @@ class ColocationController extends Controller
     {
         $user = auth()->user();
         $colocations = $user->colocations; 
-        $mesDettes = Apayer::where('user_id', $user->id)->where('statut', false)->with('depense.user')->get();
         $membres = collect();
+        $mesDettes = collect();
    
-        $colocationActive = $user->colocations()->wherePivot('left_at', false)->first();
-       dd($colocationActive);
+        $colocationActive = $user->colocations()->wherePivotNull('left_at')->first();
+   
        if($colocationActive){
-            $membres = $colocationActive->users()->withPivot('role_colocation')->get();
-       }
+            $membres = $colocationActive->users() ->wherePivotNull('left_at')->withPivot('role_colocation')->get();
+            $mesDettes = Apayer::where('user_id', $user->id)->where('statut', false)->with('depense.user')->get();       }
 
         return view('colocations.index', compact('colocations', 'membres', 'mesDettes'));
     }

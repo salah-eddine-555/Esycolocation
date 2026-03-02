@@ -51,9 +51,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/invitation/{colocation}', [InvitationController::class, 'store'])->name('inviter.store');
 
     Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
+    Route::post('/quit/{colocation}', [UserController::class, 'quit'])->name('quit');
 
     //paiement
     Route::post('/payer/{dette}', [ApayerController::class, 'payer'])->name('payer');
+    
    
   
 });

@@ -91,9 +91,20 @@
 </div>
                     
                    <div class="card shadow-sm mb-4">
-                <div class="card-header bg-primary text-white">
-                        <h5 class="mb-0">Membres de la colocation</h5>
-                    </div>
+                  <!-- HEADER -->
+                        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0 fw-bold">Membres de la colocation</h5>
+                    
+                            @if($membres->isNotEmpty())
+                                <form action="{{route('quit', $colocation)}}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger btn-sm px-3">
+                                        Quitter
+                                    </button>
+                                </form>
+                            @endif
+                        </div>
+
                     <div class="card-body">
                         <div class="row g-3">
                             @foreach($membres as $membre)
